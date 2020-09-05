@@ -15,10 +15,10 @@ Inside of (X -> IO r) you have free use of the resource X and (if withX is writt
 Managed abstracts away the explicit nesting of withX when you want to work with more than one resource.
 ```idris
 foo : IO ()
-foo = runManaged $ do
+foo = do
     withFile filename $ \file ->
       withSocket (withSocket fam ty num) $ \socket -> do
-        sendFileTo file socket
+        sendFileTo socket file
         ...
     ...
 -- vs
@@ -26,7 +26,7 @@ foo : IO ()
 foo = runManaged $ do
     file <- managed (withFile filename)
     soc <- managed (withSocket fam ty num)
-    sendFileTo file socket
+    sendFileTo socket file
     ...
     
 ```
