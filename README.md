@@ -10,7 +10,7 @@ withFile : String -> (Either FileError File -> IO r) -> IO r
 withSocket : ... -> (Either SocketError Socket -> IO r) -> IO r
 withX : ... -> (X -> IO r) -> IO r
 ```
-Inside of (X -> IO r) you have free use of the resource and, if withX is written to, it's disposed of when you're done. However if you want to use more than one resource in this manner you end up nesting withX's and it can be quite a detriment to clean code.
+Inside of (X -> IO r) you have free use of the resource X and (if withX is written to) it is disposed of when you're done. However if you want to use more than one resource in this manner you end up nesting withX's and it can be quite a detriment to clean code.
 
 Managed abstracts away the explicit nesting of withX when you want to work with more than one resource.
 ```idris
