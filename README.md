@@ -17,7 +17,7 @@ Managed abstracts away the explicit nesting of withX when you want to work with 
 foo : IO ()
 foo = do
     withFile filename $ \file ->
-      withSocket (withSocket fam ty num) $ \socket -> do
+      withSocket fam ty num $ \socket -> do
         sendFileTo socket file
         ...
     ...
