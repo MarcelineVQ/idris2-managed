@@ -81,7 +81,7 @@ implementation HasIO Managed where
   liftIO io = MkManaged $ io_bind io
 
 public export
-interface HasIO m => MonadManaged (m : Type -> Type) where
+interface HasIO m => MonadManaged m where
   use : Managed a -> m a -- bad name
 
 public export
