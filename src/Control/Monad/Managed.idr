@@ -33,7 +33,7 @@ getManaged (MkManaged g) = g
 
 export
 %inline
-managed : (forall r. (a -> IO r) -> IO r) -> Managed a
+managed : (1 _ : forall r. (a -> IO r) -> IO r) -> Managed a
 managed = MkManaged
 
 export
@@ -72,13 +72,9 @@ public export
 Monoid a => Monoid (Managed a) where
   neutral = pure neutral
 
--- The linearity constraint on HasIO is pretty obnoxious. I don't really see the
--- point of it and I don't want to require LinearIO of my users. Do I need a
--- MonadUnliftIO/MonadBase or something to bring my HasIO down to IO?
--- NB Just gonna go with IO in Managed for now.
 public export
 implementation HasIO Managed where
-  liftIO io = MkManaged $ io_bind io
+  liftIO io = MkManaged (io >>=)
 
 public export
 interface HasIO m => MonadManaged m where

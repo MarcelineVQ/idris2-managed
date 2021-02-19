@@ -32,11 +32,9 @@ public export
 implementation Monad (Codensity m) where
   x >>= k = MkCodensity \bmr => runCodensity x (\a => runCodensity (k a) bmr)
 
--- The linearity constraint on liftIO is a little obnoxious. I don't really see
--- the point of it.
 public export
-implementation LinearIO m => HasIO (Codensity m) where
-  liftIO x = MkCodensity \1 act => bindL (liftIO x) act
+implementation HasIO m => HasIO (Codensity m) where
+  liftIO x = MkCodensity (liftIO x >>=)
 
 public export
 implementation MonadTrans Codensity where
