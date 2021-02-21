@@ -1,0 +1,9 @@
+package: managed
+version: 0.1.3.3
+
+depends:
+- base
+- contrib
+- network
+- managed
+
