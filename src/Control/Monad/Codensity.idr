@@ -19,18 +19,18 @@ implementation Functor (Codensity m) where
 
 public export
 implementation Applicative (Codensity m) where
-  pure x = MkCodensity \amr => amr x
-  f <*> x = MkCodensity \bmr =>
+  pure x = MkCodensity $ \amr => amr x
+  f <*> x = MkCodensity $ \bmr =>
    runCodensity f (\ab => runCodensity x (\a => bmr (ab a)))
 
 public export
 implementation Alternative m => Alternative (Codensity m) where
-  x <|> y = MkCodensity \k => runCodensity x k <|> runCodensity y k
-  empty = MkCodensity \_ => empty
+  x <|> y = MkCodensity $ \k => runCodensity x k <|> runCodensity y k
+  empty = MkCodensity $ \_ => empty
 
 public export
 implementation Monad (Codensity m) where
-  x >>= k = MkCodensity \bmr => runCodensity x (\a => runCodensity (k a) bmr)
+  x >>= k = MkCodensity $ \bmr => runCodensity x (\a => runCodensity (k a) bmr)
 
 public export
 implementation HasIO m => HasIO (Codensity m) where
@@ -42,10 +42,10 @@ implementation MonadTrans Codensity where
 
 MonadReader r m => MonadReader r (Codensity m) where
   ask = MkCodensity (ask >>=)
-  local f (MkCodensity co) = MkCodensity \amb => do
+  local f (MkCodensity co) = MkCodensity $ \amb => do
     r <- ask
     local f . co $ local (const r) . amb
 
 MonadReader s m => MonadState s (Codensity m) where
   get = MkCodensity (ask >>=)
-  put s = MkCodensity \amb => local (const s) (amb ())
+  put s = MkCodensity $ \amb => local (const s) (amb ())
