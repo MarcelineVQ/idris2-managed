@@ -37,10 +37,3 @@ You can install via idris2 directly:
 `idris2 --install package.ipkg`  
 Or via the Makefile:  
 `make install`  
-Or via the [sae tool](https://github.com/DoctorRyner/sae):
-`sae-linux install`
-
-Version
--------
-
-This package follows [Haskell PVP](https://pvp.haskell.org/) which is distinct from [SEMVER](https://semver.org/) in that when examining `1.2.3`, `1.2`  is the Major Version rather than `1`.

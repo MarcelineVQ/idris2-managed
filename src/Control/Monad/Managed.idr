@@ -84,6 +84,11 @@ public export
 MonadManaged Managed where
   use = id
 
+
+public export
+MonadManaged IO where
+  use x = manageWith x pure
+
 public export
 MonadManaged m => MonadManaged (StateT s m) where
   use x = lift (use x)

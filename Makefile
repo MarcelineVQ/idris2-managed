@@ -3,10 +3,10 @@
 .PHONY: build
 
 build:
-	idris2 --build package.ipkg
+	idris2 --build managed.ipkg
 
 install:
-	idris2 --install package.ipkg
+	idris2 --install managed.ipkg
 
 clean:
 	@find . -type f -name '*.ttc' -exec rm -f {} \;
